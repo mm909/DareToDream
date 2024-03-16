@@ -1,4 +1,5 @@
 *.csv
-!data/raw_flight.csv
 *.pyc
-.venv
+*.pkl
+
+!data/source/raw_flight_data.csv

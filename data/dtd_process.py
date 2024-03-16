@@ -1,4 +1,6 @@
 import re
+import os
+import pickle
 import pandas as pd
 import airportsdata
 from dtd_config import dtd_config
@@ -13,7 +15,7 @@ class DTD:
         return
 
     def load_flight_data(self) -> None:
-        path = self.config['dtd_data_path']
+        path = self.config['data_path']
         self.data = pd.read_csv(path)
         return
     
@@ -101,6 +103,8 @@ class DTD:
             Most memos are formated like this:
                 '{OBJECTIVE} with {PASSENGER NAME}'
                 '{OBJECTIVE} for {PASSENGER NAME}'
+                'With {PASSENGER NAME}'
+
 
             There are a few notable exceptions
                 (Handled) 'Cris '
@@ -112,17 +116,22 @@ class DTD:
                 (Handled) 'Intro flight for Brad and Melanie'
                 (Handled) 'Aircraft moved for maintaince'
                 (Handled) 'Test Flight for breaks'
+                (Handled) 'Instrument Training eith Rick Casebolt'
+                'With Rick Casbolt'
         '''
 
         regxes = [
             r'(.*) with (.*)',
-            r'(.*) for (.*)'
+            r'(.*) eith (.*)',
+            r'(.*) for (.*)',
+            r'With (.*)'
         ]
 
         for regx in regxes:
             match = re.search(regx, memo, re.IGNORECASE)
             if match:
-                raw_passenger_name = match.group(2)
+                group = len(match.groups())
+                raw_passenger_name = match.group(group)
 
                 # Handle 'Cris '
                 passenger_name = raw_passenger_name.strip()
@@ -196,22 +205,29 @@ class DTD:
 
         regxes = [
             r'(.*) with (.*)',
-            r'(.*) for (.*)'
+            r'(.*) eith (.*)',
+            r'(.*) for (.*)',
+            r'With (.*)'
         ]
 
         for regx in regxes:
             match = re.search(regx, memo, re.IGNORECASE)
             if match:
-                flight_objective = match.group(1)
+                if len(match.groups()) > 1:
+                        flight_objective = match.group(1)
+                        break
+                else:
+                    flight_objective = "Other"
+            else:
+                flight_objective = memo
 
-                # Condenesed flight objectives
-                objective_consolidation = self.config['flight_objective_consolidation']
-                for correct_objective, misspelled_objectives in objective_consolidation.items():
-                    if flight_objective in misspelled_objectives:
-                        flight_objective = correct_objective
+        # Condenesed flight objectives
+        objective_consolidation = self.config['flight_objective_consolidation']
+        for correct_objective, misspelled_objectives in objective_consolidation.items():
+            if flight_objective in misspelled_objectives:
+                flight_objective = correct_objective
 
-                return flight_objective
-        pass
+        return flight_objective
 
     def get_airport_location(self):
         '''
@@ -239,9 +255,6 @@ class DTD:
             if airport in airports:
                 self.airport_data[airport] = airports[airport]
         
-        # print(airport_distance(self.airport_data, 'KVGT', '67L'))
-
-
     def create_passenger_column(self):
         '''
             Create a new column in the dataframe that contains the passenger name
@@ -263,6 +276,13 @@ class DTD:
         self.data['distance_travelled_3'] = self.data.apply(lambda row: airport_distance(self.airport_data, row['arrival_2'], row['arrival_3']), axis=1)
         self.data['distance_travelled'] = self.data['distance_travelled_1'] + self.data['distance_travelled_2'] + self.data['distance_travelled_3']
 
+    def save(self):
+        output_folder = self.config['output_folder']
+        os.makedirs(output_folder, exist_ok=True)
+        self.data.to_csv(f'{output_folder}/processed_flight_data.csv', index=False)
+        with open(f'{output_folder}/dtd.pkl', 'wb') as f:
+            pickle.dump(dtd, f)
+
 if __name__ == '__main__':
     dtd = DTD(dtd_config)
     dtd.load_flight_data()
@@ -279,4 +299,9 @@ if __name__ == '__main__':
     dtd.get_airport_location()
     dtd.create_distance_travlled_columns()
 
-    dtd.data.to_csv('data/processed_flight_data.csv', index=False)
+    dtd.save()
+
+
+
+    
+
