@@ -6,7 +6,7 @@ class DTD:
     def __init__(self, config) -> None:
         self.config = config
         self.passenger_names = {}
-        self.flight_purposes = {}
+        self.flight_objectives = {}
         return
 
     def load_flight_data(self) -> None:
@@ -90,8 +90,8 @@ class DTD:
             Extract the passenger name from the memo
             
             Most memos are formated like this:
-                '{PURPOSE} with {PASSENGER NAME}'
-                '{PURPOSE} for {PASSENGER NAME}'
+                '{OBJECTIVE} with {PASSENGER NAME}'
+                '{OBJECTIVE} for {PASSENGER NAME}'
 
             There are a few notable exceptions
                 (Handled) 'Cris '
@@ -155,12 +155,12 @@ class DTD:
 
                 return passenger_name
     
-    def build_flight_purpose_dict(self) -> None:
+    def build_flight_objective_dict(self) -> None:
         '''
-            Build a dictionary of flight purposes and the number
+            Build a dictionary of flight objectives and the number
             of times they appear in the memo column
 
-            self.flight_purposes = {
+            self.flight_objectives = {
                 'Flight Review': 3,
                 'Intro Flight': 5,
                 ...
@@ -170,20 +170,20 @@ class DTD:
         memos = self.data['memo'].dropna().tolist()
 
         for memo in memos:
-            flight_purpose = self.extract_purpose_from_memo(memo)
-            if flight_purpose:
-                self.flight_purposes[flight_purpose] = self.flight_purposes.get(flight_purpose, 0) + 1
+            flight_objective = self.extract_objective_from_memo(memo)
+            if flight_objective:
+                self.flight_objectives[flight_objective] = self.flight_objectives.get(flight_objective, 0) + 1
         
-        self.flight_purposes = dict(sorted(self.flight_purposes.items()))
-        print(self.flight_purposes)
+        self.flight_objectives = dict(sorted(self.flight_objectives.items()))
+        print(self.flight_objectives)
 
-    def extract_purpose_from_memo(self, memo):
+    def extract_objective_from_memo(self, memo):
         '''
-            Extract the purpose of the flight from the memo
+            Extract the objective of the flight from the memo
 
             Most memos are formated like this:
-                '{PURPOSE} with {PASSENGER NAME}'
-                '{PURPOSE} for {PASSENGER NAME}'
+                '{OBJECTIVE} with {PASSENGER NAME}'
+                '{OBJECTIVE} for {PASSENGER NAME}'
         '''
 
         regxes = [
@@ -194,8 +194,8 @@ class DTD:
         for regx in regxes:
             match = re.search(regx, memo, re.IGNORECASE)
             if match:
-                flight_purpose = match.group(1)
-                return flight_purpose
+                flight_objective = match.group(1)
+                return flight_objective
         pass
 
     def create_passenger_column(self):
@@ -210,5 +210,5 @@ if __name__ == '__main__':
     dtd.change_col_names()
     dtd.build_passenger_dict()
     dtd.create_passenger_column()
-    dtd.build_flight_purpose_dict()
+    dtd.build_flight_objective_dict()
     dtd.data.to_csv('dtd_data.csv', index=False)

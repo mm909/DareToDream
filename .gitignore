@@ -1,3 +1,4 @@
 *.csv
 !data/raw_flight.csv
 *.pyc
+.venv
