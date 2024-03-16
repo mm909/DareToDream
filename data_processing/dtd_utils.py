@@ -1,4 +1,5 @@
 import math
+import json
 import numpy as np
 
 def airport_distance(airport_data, airport_name_1, airport_name_2):
@@ -27,3 +28,11 @@ def lat_long_distance(lat1, lon1, lat2, lon2):
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     d = R * c
     return d
+
+class CustomEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.int32):
+            return int(obj)
+        if isinstance(obj, np.int64):
+            return int(obj)
+        return json.JSONEncoder.default(self, obj)

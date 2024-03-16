@@ -1,6 +1,6 @@
 dtd_config = {
-    'data_path': 'source/raw_flight_data.csv',
-    'output_folder': 'output/',
+    'data_path': 'data/source/raw_flight_data.csv',
+    'output_folder': 'data/output/',
     'passenger_name_consolidation': {
         'Adam Berger': [
             'Adam Berger',
@@ -12,7 +12,7 @@ dtd_config = {
         ],
         'Chris Frainer': [
             'Chris Frainer',
-            'Chris Frainer'
+            'Chris Frchner'
         ],
         'Clair Christanson': [
             'Clair Christanson',
@@ -27,6 +27,10 @@ dtd_config = {
             'Cris Atkins',
             'Cris',
         ],
+        'Ed Lewis': [
+            'Ed Lewis',
+            'Ed Lewis LDA 19 G',
+        ],
         'Curtis Witwer': [
             'Curtis Witwer',
             'Curtis Wittwer',
@@ -34,6 +38,8 @@ dtd_config = {
         'David Peterson': [
             'David Peterson',
             'David Petersen',
+            'Dave Petterson',
+            'David Paterson',
         ],
         'Dillon Erickson': [
             'Dillan Errickson',
@@ -109,9 +115,13 @@ dtd_config = {
             'Monserret',
             'Montsettet',
         ],
+        'Brian Mann': [
+            'Brian Mann',
+            'Bryan Mann',
+        ],
         'Nick Mann': [
-            'Nick Mahan'
-            'Nick Mann'
+            'Nick Mahan',
+            'Nick Mann',
         ],
         'Paul Dal\'s son': [
             'Paul Dal\'s',
@@ -123,6 +133,10 @@ dtd_config = {
         'Richard Paine': [
             'Richard Paine',
             'Richard Pinie',
+        ],
+        'Rick Casebolt': [
+            'Rick Casbolt',
+            'Rick Casebolt',
         ],
         'Ricky Kasper': [
             'Rick Kasper',
@@ -314,7 +328,6 @@ dtd_config = {
             'PA24 Intro',
         ],
         'Instrument Training': [
-
             'Instrument ACS',
             'Instrument Approaches',
             'Instrument Attitude Flight',
@@ -456,11 +469,13 @@ dtd_config = {
         'Checkrides': [
             'MEL Checkride Pass',
             'MEI Checkride - Pass',
-            'Commerical Checkride prep',
             'COM SEL Checkride - Pass',
-            'COM SEL Checkride Prep',
             'Commerical MEL Checkride - Pass',
             'CFI SEL Checkride - Pass',
+            'Instrument Check Ride - Pass',
+            'Private Pilot Check Ride - Pass',
+            'Commerical Checkride prep',
+            'COM SEL Checkride Prep',
             'CFII Checkride Pass',
             'CFII Checkride Prep',
             'Checkride retraining',
@@ -468,9 +483,7 @@ dtd_config = {
             'Instrument Checkride Prep',
             'Private Pilot Checkride Prep',
             'Private pilot checkride Prep',
-            'Instrument Check Ride - Pass',
             'Instrument Check Ride Prep',
-            'Private Pilot Check Ride - Pass',
             'Private Pilot Check Ride Prep',
         ],
         'Cross Wind Training': [
