@@ -1,12 +1,15 @@
 import re
 import pandas as pd
+import airportsdata
 from dtd_config import dtd_config
+from dtd_utils import airport_distance
 
 class DTD:
     def __init__(self, config) -> None:
         self.config = config
         self.passenger_names = {}
         self.flight_objectives = {}
+        self.airport_data = {}
         return
 
     def load_flight_data(self) -> None:
@@ -63,6 +66,12 @@ class DTD:
         self.data.rename(columns=new_col_names, inplace=True)
 
         return
+
+    def simple_clean_data(self) -> None:
+        self.data['departure'] = self.data['departure'].str.strip()
+        self.data['arrival_1'] = self.data['arrival_1'].str.strip()
+        self.data['arrival_2'] = self.data['arrival_2'].str.strip()
+        self.data['arrival_3'] = self.data['arrival_3'].str.strip()
 
     def build_passenger_dict(self) -> None:
         '''
@@ -175,7 +184,6 @@ class DTD:
                 self.flight_objectives[flight_objective] = self.flight_objectives.get(flight_objective, 0) + 1
         
         self.flight_objectives = dict(sorted(self.flight_objectives.items()))
-        print(self.flight_objectives)
 
     def extract_objective_from_memo(self, memo):
         '''
@@ -195,8 +203,44 @@ class DTD:
             match = re.search(regx, memo, re.IGNORECASE)
             if match:
                 flight_objective = match.group(1)
+
+                # Condenesed flight objectives
+                objective_consolidation = self.config['flight_objective_consolidation']
+                for correct_objective, misspelled_objectives in objective_consolidation.items():
+                    if flight_objective in misspelled_objectives:
+                        flight_objective = correct_objective
+
                 return flight_objective
         pass
+
+    def get_airport_location(self):
+        '''
+            Get the location of the airport from the departure and arrival columns
+        '''
+
+        airports = self.data['departure'].tolist()
+        airports += self.data['arrival_1'].tolist()
+        airports += self.data['arrival_2'].tolist()
+        airports += self.data['arrival_3'].tolist()
+        airports = [airport for airport in airports if str(airport) != 'nan']
+        
+        airport_counts = {}
+        for airport in airports:
+            airport_counts[airport] = airport_counts.get(airport, 0) + 1
+            self.airport_data[airport] = None
+
+        airports = airportsdata.load() 
+        for airport in airport_counts:
+            if airport in airports:
+                self.airport_data[airport] = airports[airport]
+
+        airports = airportsdata.load('LID')
+        for airport in airport_counts:
+            if airport in airports:
+                self.airport_data[airport] = airports[airport]
+        
+        # print(airport_distance(self.airport_data, 'KVGT', '67L'))
+
 
     def create_passenger_column(self):
         '''
@@ -204,11 +248,35 @@ class DTD:
         '''
         self.data['passenger'] = self.data['memo'].apply(self.extract_passenger_from_memo)
 
+    def create_flight_objective_column(self):
+        '''
+            Create a new column in the dataframe that contains the flight objective
+        '''
+        self.data['flight_objective'] = self.data['memo'].apply(self.extract_objective_from_memo)
+
+    def create_distance_travlled_columns(self):
+        '''
+            Create a new column in the dataframe that contains the distance travelled
+        '''
+        self.data['distance_travelled_1'] = self.data.apply(lambda row: airport_distance(self.airport_data, row['departure'], row['arrival_1']), axis=1)
+        self.data['distance_travelled_2'] = self.data.apply(lambda row: airport_distance(self.airport_data, row['arrival_1'], row['arrival_2']), axis=1)
+        self.data['distance_travelled_3'] = self.data.apply(lambda row: airport_distance(self.airport_data, row['arrival_2'], row['arrival_3']), axis=1)
+        self.data['distance_travelled'] = self.data['distance_travelled_1'] + self.data['distance_travelled_2'] + self.data['distance_travelled_3']
+
 if __name__ == '__main__':
     dtd = DTD(dtd_config)
     dtd.load_flight_data()
     dtd.change_col_names()
+
+    dtd.simple_clean_data()
+
     dtd.build_passenger_dict()
     dtd.create_passenger_column()
+
     dtd.build_flight_objective_dict()
-    dtd.data.to_csv('dtd_data.csv', index=False)
+    dtd.create_flight_objective_column()
+
+    dtd.get_airport_location()
+    dtd.create_distance_travlled_columns()
+
+    dtd.data.to_csv('data/processed_flight_data.csv', index=False)

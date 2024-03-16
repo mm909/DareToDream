@@ -1,5 +1,5 @@
 dtd_config = {
-    'dtd_data_path': 'data/raw_flight.csv',
+    'dtd_data_path': 'data/raw_flight_data.csv',
     'passenger_name_consolidation': {
         'Adam Berger': [
             'Adam Berger',
@@ -148,7 +148,7 @@ dtd_config = {
             'Tyson Teerlink',
         ],
     },
-    'flight_purpose_consolidation': {
+    'flight_objective_consolidation': {
         'Maneuvers': [
             'AC11 Manuvers',
             'Basic manuvers',
@@ -176,12 +176,8 @@ dtd_config = {
             'Attitude Instrument Flight / UA Recovery'
             'Attitude Instrument Flight, LDA G/S'
         ],
-        'Avonics Work': [
-            'Avonics work',
-            'Avonics, AP C210 procedures',
-        ],
         'Flight Review':[
-            'BFR'
+            'BFR',
             'Flight',
             'Flight Review',
             'Flight Review / Landing Practice',
@@ -203,6 +199,9 @@ dtd_config = {
             'C172 Intro / Checkout',
             'PA 24 Checkout',
             'PA24 Checkout',
+            'Archer Checkout',
+            'Checkout Flight',
+            'Checkout flight',
         ],
         'CFI Training': [
             'CFI PTS',
@@ -298,17 +297,22 @@ dtd_config = {
             'PA 24-250 intro',
             'PA24 Intro',
         ],
-        'High Performance': [
-            'High Preformance Nav and Pattern work',
-            'High preformance complex training',
-        ],
         'Instrument Training': [
             'Instrument ACS',
             'Instrument Approaches',
             'Instrument Attitude Flight',
             'Instrument Training',
+            'ILS 12L KVGT',
+            'ILS 20, RNAV 20, LDA 19',
+            'ILS 3 KGCN IFR Cross country Training',
+            'ILS, LDA, Communications',
+            'ILS,PP,LOC,GPS, Hold , Unusual Attitudes',
             'Instrument attitude flight LDA',
             'Instrument cross country Training',
+            'Attitude Instrument Flight',
+            'Attitude Instrument Flight / IFR Cross country procedures',
+            'Attitude Instrument Flight / UA Recovery',
+            'Attitude Instrument Flight, LDA G/S',
         ],
         'IPC': [
             'IPC',
@@ -316,11 +320,7 @@ dtd_config = {
             'IPC Training',
         ],
         'ILS':[
-            'ILS 12L KVGT',
-            'ILS 20, RNAV 20, LDA 19',
-            'ILS 3 KGCN IFR Cross country Training',
-            'ILS, LDA, Communications',
-            'ILS,PP,LOC,GPS, Hold , Unusual Attitudes',
+
         ],
         'LDA': [
             'LDA',
@@ -372,6 +372,7 @@ dtd_config = {
             'Solo Warm up',
             'Solo Warmup',
             'Solo warm up',
+            '90 Day Solo Evaluation',
         ],
         'Stall Training': [
             'Stall Training',
@@ -553,6 +554,13 @@ dtd_config = {
             'Weather issue during Taxi,',
             'Aircraft moved',
             'C177 Time Build',
+            'ASI Failure',
+            'Auto Pilot Test',
+            'Avonics work',
+            'Avonics, AP C210 procedures',
+            'Flight',
+            'High Preformance Nav and Pattern work',
+            'High preformance complex training',
         ],
     }
 }
