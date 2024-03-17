@@ -83,3 +83,6 @@
 
 ## Name/Title Ideas
 - Decade of Dreaming
+
+## Story Notes
+Ending with some verions of 'Thank you for dreaming'
