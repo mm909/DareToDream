@@ -8,17 +8,20 @@ const TempSlide = () => {
     }
 
     return (
-        <div className={`
-            flex
-            flex-col
-            justify-center
-            items-center
-            h-screen
-            w-full
-        `}
-        style = {{
-            backgroundColor: randomColor(),
-        }}>
+        <div className="h-screen w-full">
+            <div className={`
+                flex
+                flex-col
+                justify-center
+                items-center
+                h-screen
+                w-full
+            `}
+            style = {{
+                // backgroundColor: randomColor(),
+                backgroundImage: '#fff',
+            }}>
+            </div>
         </div>
     );
 };
