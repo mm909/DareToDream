@@ -4,3 +4,4 @@
 
 !data/source/raw_flight_data.csv
 *.json
+!dtd/*.json
