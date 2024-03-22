@@ -107,7 +107,7 @@ function Timeline() {
             ArrivalName: 'Jean',
             Hours: '2.2',
             Memo: 'Private Pilot Check Ride - Pass',
-            Caption: '\'Offical\' (Checkride 1/7)',
+            Caption: '\'Offical\' (Checkride 1/8)',
             BottomSpacing: '100vh'
         },
         {
@@ -137,7 +137,7 @@ function Timeline() {
             ArrivalName: 'Local',
             Hours: '1.3',
             Memo: 'MEL Checkride Pass',
-            Caption: 'Checkride 2/7',
+            Caption: 'Checkride 2/8',
             BottomSpacing: '0px'
         },
         {
@@ -152,7 +152,7 @@ function Timeline() {
             ArrivalName: 'Local',
             Hours: '1.5',
             Memo: 'Instrument Check Ride - Pass',
-            Caption: 'Checkride 3/7',
+            Caption: 'Checkride 3/8',
             BottomSpacing: '100vh'
         },
         {
@@ -167,7 +167,7 @@ function Timeline() {
             ArrivalName: 'Local',
             Hours: '1.6',
             Memo: 'Commerical MEL Checkride - Pass',
-            Caption: 'Checkride 4/7',
+            Caption: 'Checkride 4/8',
             BottomSpacing: '0px'
         },
         {
@@ -182,7 +182,7 @@ function Timeline() {
             ArrivalName: 'Local',
             Hours: '1.3',
             Memo: 'MEI Checkride - Pass',
-            Caption: 'Checkride 5/7',
+            Caption: 'Checkride 5/8',
             BottomSpacing: '100vh'
         },
         {
@@ -197,7 +197,7 @@ function Timeline() {
             ArrivalName: 'Local',
             Hours: '1.1',
             Memo: 'CFII Checkride Pass',
-            Caption: 'Checkride 6/7',
+            Caption: 'Checkride 6/8',
             BottomSpacing: '100vh'
         },
         // {
@@ -211,7 +211,7 @@ function Timeline() {
         //     Arrival: 'KIGM',
         //     ArrivalName: 'Kingman',
         //     Hours: '1.5',
-        //     Memo: 'Flight for friend',
+        //     Memo: 'Flight with a friend',
         //     Caption: '',
         //     BottomSpacing: '10px'
         // },
@@ -227,7 +227,7 @@ function Timeline() {
             ArrivalName: 'Local',
             Hours: '1.0',
             Memo: 'COM SEL Checkride - Pass',
-            Caption: 'Checkride 7/7',
+            Caption: 'Checkride 7/8',
             BottomSpacing: '10px'
         },
         {
@@ -242,7 +242,7 @@ function Timeline() {
             ArrivalName: 'Local',
             Hours: '1.1',
             Memo: 'CFI SEL Checkride - Pass',
-            Caption: 'Offical CFI',
+            Caption: 'Offical CFI 8/8',
             BottomSpacing: '100vh'
         },
         {
@@ -336,6 +336,21 @@ function Timeline() {
             Caption: '',
             BottomSpacing: '100vh'
         },
+        // {
+        //     Template: 'TimelineFlight',
+        //     FlightNumber: '157',
+        //     Date: '2014-04-07',
+        //     AirplaneModel: 'C150',
+        //     TailNumber: 'N3073S',
+        //     Departure: '67L',
+        //     DepartureName: 'Mesquite',
+        //     Arrival: 'KIGM',
+        //     ArrivalName: 'Kingman',
+        //     Hours: '1.5',
+        //     Memo: 'Flight with a friend',
+        //     Caption: '',
+        //     BottomSpacing: '10px'
+        // },
     ]
 
     return (
